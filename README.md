@@ -1,13 +1,27 @@
 # Ops Studio
 
-A collection of tools, workflows, and demos for engineering and business operations.
+Python test automation for small engineering teams that want repeatable release checks and clear failure reports. This portfolio also includes a GPU infrastructure validation example.
 
 | Project | Start here | What to verify next |
 | --- | --- | --- |
 | GPU validation | [Python checker](gpu-validation/gpu_check.py) and [sample reports](gpu-validation/examples/) | Run the inventory check on a real NVIDIA node against agreed acceptance criteria. |
+| Release checks | [Lead follow-up API and test suite](lead-followup/release-checks/) | Verify enquiry intake, overdue reminders, and duplicate protection in [GitHub Actions](https://github.com/UdayReddy521/ops-studio/actions/workflows/release-checks.yml). |
 | Lead follow-up | [Importable n8n workflow](lead-followup/lead-followup.n8n.json) and [sample output](lead-followup/examples/lead-sample-output.json) | Connect an approved enquiry source and verify intake and reminder delivery end to end. |
 
-## Quick start
+## Run the release checks
+
+The staging example exercises the lead-follow-up flow through HTTP endpoints, with SQLite for enquiry storage and a simulated reminder inbox. The Python tests drive those endpoints and verify that the outcomes persist across a restart. The importable n8n workflow below remains available as a separate sample.
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r lead-followup/release-checks/requirements.txt
+python -m unittest discover -s lead-followup/release-checks -v
+```
+
+See the [release-check walkthrough](lead-followup/release-checks/README.md) to try the endpoints and read the expected results.
+
+## GPU and n8n quick start
 
 From the repository root, run the GPU inventory checker with built-in sample data. It requires Python 3 and no GPU.
 
