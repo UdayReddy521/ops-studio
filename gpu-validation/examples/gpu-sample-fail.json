@@ -1,0 +1,15 @@
+{
+  "source": "synthetic",
+  "scope": "inventory only",
+  "count_matches": false,
+  "model_matches": true,
+  "driver_matches": true,
+  "devices": [
+    {
+      "index": "0",
+      "name": "NVIDIA H100 80GB HBM3",
+      "driver_version": "570.133.20"
+    }
+  ],
+  "verdict": "FAIL"
+}

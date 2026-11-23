@@ -1,0 +1,46 @@
+{
+  "name": "Interior design lead follow-up demo",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "dd52bbf7-bb99-4fc7-899b-f9b107628d6b",
+      "name": "Run demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fixed clock and fictional enquiries make the walkthrough repeatable.\nconst now = Date.parse('2026-11-20T06:30:00Z');\nconst leads = [\n  {id: 'L101', owner: 'Priya', status: 'NEW', due: '2026-11-20T06:00:00Z'},\n  {id: 'L102', owner: 'Ravi', status: 'NEW', due: '2026-11-20T08:00:00Z'},\n  {id: 'L103', owner: 'Priya', status: 'CONTACTED', due: '2026-11-20T06:00:00Z'},\n];\n\nfunction reminderQueue(rows, asOf) {\n  return rows.filter(lead => lead.status === 'NEW' && Date.parse(lead.due) <= asOf)\n    .map(({id, owner, due}) => ({\n      json: {id, owner, due, action: 'Owner to follow up', mode: 'demo'},\n    }));\n}\n\nreturn reminderQueue(leads, now);\n"
+      },
+      "id": "dc672a78-4181-4b69-abc8-d2c88738353a",
+      "name": "Find overdue leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        250,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Run demo": {
+      "main": [
+        [
+          {
+            "node": "Find overdue leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
